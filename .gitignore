@@ -1,0 +1,6 @@
+kommissar/
+*.BAS
+*.o
+*.PRG
+RCS/
+secrets
