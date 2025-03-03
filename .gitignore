@@ -1,5 +1,7 @@
 kommissar/
+*.ASM
 *.BAS
+*.MAP
 *.o
 *.PRG
 RCS/
