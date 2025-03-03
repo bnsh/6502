@@ -1,0 +1,11 @@
+OPEN 3,8,3,"SIMPLE.CS1,S,R"
+OPEN 4,8,4,"SIMPLE.CPY,S,W"
+
+TOP:
+    GET#3, R$
+    IF R$ = "" THEN GOTO DONE
+    PRINT#4, R$;
+    GOTO TOP
+DONE:
+    CLOSE 3
+    CLOSE 4

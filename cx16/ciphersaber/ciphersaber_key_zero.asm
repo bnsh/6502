@@ -1,7 +1,10 @@
-.exportzp cleartext_address, ciphertext_address, key_address, rounds
+.exportzp cleartext_address, ciphertext_address, key_address, iv_address, rounds
 
-.SEGMENT "ZEROPAGE"
+.segment "ZEROPAGE"
 key_address:
+    .addr $0000
+
+iv_address:
     .addr $0000
 
 cleartext_address:

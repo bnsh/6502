@@ -1,8 +1,9 @@
 .export key_mix
-.import cs_state_array
-.importzp rounds, key_address
+.exportzp i, j, roundpos, keypos
+.import cs_state_array, keyiv_array, keyiv_length
+.importzp rounds
 
-.SEGMENT "ZEROPAGE"
+.segment "ZEROPAGE"
 ; Most of these names are to conform to the ciphersaber docs.
 i: .byte $00
 j: .byte $00
@@ -11,7 +12,7 @@ keypos: .byte $00
 swap: .byte $00
 first: .byte $00
 
-.SEGMENT "CODE"
+.segment "CODE"
 
 key_mix:
     ; Initialize the variables.
@@ -38,16 +39,19 @@ i_loop:
     beq end_i
 i_loop_body:
 
+    ; jsr debug
+
     ;       j += state[i]
     ldx i
     lda j
     clc
     adc cs_state_array, x
 
-    ;       j += (*key_address)[keypos]
+    ;       j += keyiv_array[keypos]
     clc
     ldy keypos
-    adc (key_address), y
+    adc keyiv_array, y
+    sta j
 
     ; swap cs_state_array[i] and cs_state_array[j]
     ; 1. swap = cs_state_array[i]
@@ -67,15 +71,13 @@ i_loop_body:
     sta cs_state_array, x
 
     ldy keypos
-    lda (key_address), y
-    cmp #$00
-    bne increment_keypos
-    stz keypos ; reset keypos
-    jmp increment_i
-increment_keypos:
-    lda keypos
-    inc
-    sta keypos
+    iny
+    cpy keyiv_length
+    bne sty_keypos
+    ldy #0
+sty_keypos:
+    lda keyiv_array, y
+    sty keypos
 
 increment_i:
     lda i
