@@ -1,11 +1,12 @@
 OPEN 3,8,3,"SIMPLE.CS1,S,R"
 OPEN 4,8,4,"SIMPLE.CPY,S,W"
 
-TOP:
+FOR I = 0 TO -1 STEP 0
     GET#3, R$
-    IF R$ = "" THEN GOTO DONE
-    PRINT#4, R$;
-    GOTO TOP
+    EOF = ST
+    PRINT#4, CHR$(ASC(R$));
+    I = (EOF <> 0)
+NEXT
 DONE:
     CLOSE 3
     CLOSE 4

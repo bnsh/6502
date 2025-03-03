@@ -33,15 +33,13 @@ loop:
 ;; close 3
 ;; close 4
 ;; ```
+    jsr CHRIN
+    jsr CHROUT
+
     jsr READST
     and #$40
     cmp #$40
-    beq done
-    jsr CHRIN
-    jsr CHROUT
-    jmp loop
-
-done:
+    bne loop
     jsr closeinfile
     jsr closeoutfile
     rts
