@@ -19,7 +19,7 @@ SETNAM = $FFBD
     .byte $32, $30, $36, $31        ; 2061
     .byte $00, $00, $00             ; end of program
 
-; Copy cknight.cs1 to cknight.cpy
+; Copy simple.cs1 to simple.cpy
     jsr openinfile
     jsr openoutfile
 loop:
@@ -37,15 +37,14 @@ loop:
     jsr CHROUT
 
     jsr READST
-    and #$40
-    cmp #$40
-    bne loop
+    cmp #$00
+    beq loop
     jsr closeinfile
     jsr closeoutfile
     rts
 
 openinfile:
-;; I _think_ this is doing the equivalent in BASIC of `open 3, 8, 3, "cknight.cs1,s,r"`
+;; I _think_ this is doing the equivalent in BASIC of `open 3, 8, 3, "simple.cs1,s,r"`
     lda #infname_end-infname-1
     ldx #<infname
     ldy #>infname
@@ -69,7 +68,7 @@ infname:
 infname_end:
 
 openoutfile:
-;; I _think_ this is doing the equivalent in BASIC of `open 4, 8, 4, "cknight.cpy,s,w"`
+;; I _think_ this is doing the equivalent in BASIC of `open 4, 8, 4, "simple.cpy,s,w"`
     lda #outfname_end-outfname-1
     ldx #<outfname
     ldy #>outfname
