@@ -65,6 +65,7 @@ openinfile:
     jsr OPEN
     ldx #3
     jsr CHKIN
+    rts
 
 closeinfile:
 ;; I _think_ this is doing the equivalent in BASIC of `close 3`
