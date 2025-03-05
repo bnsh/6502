@@ -54,7 +54,7 @@ loop:
 
 openinfile:
 ;; I _think_ this is doing the equivalent in BASIC of `open 3, 8, 3, "simple.cs1,s,r"`
-    lda #infname_end-infname-1
+    lda #infname_end-infname
     ldx #<infname
     ldy #>infname
     jsr SETNAM
@@ -73,12 +73,12 @@ closeinfile:
     rts
 
 infname:
-    .asciiz "simple.cs1,s,r"
+    .byte "simple.cs1,s,r"
 infname_end:
 
 openoutfile:
 ;; I _think_ this is doing the equivalent in BASIC of `open 4, 8, 4, "simple.cpy,s,w"`
-    lda #outfname_end-outfname-1
+    lda #outfname_end-outfname
     ldx #<outfname
     ldy #>outfname
     jsr SETNAM
@@ -98,5 +98,5 @@ closeoutfile:
     rts
 
 outfname:
-    .asciiz "simple.cpy,s,w"
+    .byte "simple.cpy,s,w"
 outfname_end:
