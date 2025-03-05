@@ -12,6 +12,10 @@ RESTOR = $FF8A
 SETLFS = $FFBA
 SETNAM = $FFBD
 
+.segment "ZEROPAGE"
+inchar: .byte $00
+status: .byte $00
+
 .segment "CODE"
     .byte $0c, $08                  ; what are these?
     .byte $0a, $00                  ; line number 10 ($000a little endian)
@@ -34,11 +38,16 @@ loop:
 ;; close 4
 ;; ```
     jsr CHRIN
-    jsr CHROUT
-
+    sta inchar
     jsr READST
-    cmp #$00
-    beq loop
+    sta status
+    lda inchar
+    jsr CHROUT
+    lda status
+    and #$40
+    cmp #$40
+    bne loop
+
     jsr closeinfile
     jsr closeoutfile
     rts
