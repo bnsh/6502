@@ -1,5 +1,3 @@
-.org $0801 ; start at address 2049 (basic's start address.)
-
 ; https://github.com/X16Community/x16-docs/blob/master/X16%20Reference%20-%2005%20-%20KERNAL.md
 CHKIN = $FFC6
 CHKOUT = $FFC9
