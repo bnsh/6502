@@ -1,4 +1,5 @@
 kommissar/
+.*.pylint3
 *.ASM
 *.BAS
 *.MAP
