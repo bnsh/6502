@@ -1,18 +1,7 @@
 .import key_setup, cipher, cipher_reader_funcaddr, cipher_writer_funcaddr
 .importzp cleartext_address, ciphertext_address, key_address, iv_address, rounds
 
-; https://github.com/X16Community/x16-docs/blob/master/X16%20Reference%20-%2005%20-%20KERNAL.md
-CHKIN = $FFC6
-CHKOUT = $FFC9
-CHRIN  = $FFCF
-CHROUT = $FFD2
-CLOSE = $FFC3
-CLRCHN = $FFCC
-OPEN = $FFC0
-READST = $FFB7
-RESTOR = $FF8A
-SETLFS = $FFBA
-SETNAM = $FFBD
+.include "kernal.inc"
 
 .segment "CODE"
 
@@ -65,30 +54,99 @@ open_infile:
     ldx #<infname
     ldy #>infname
     jsr SETNAM
-    lda #3                          ; open 3, 8, 3, 
+    lda #5                          ; open 5, 8, 5, 
     ldx #8
-    ldy #3
+    ldy #5
     jsr SETLFS
     jsr OPEN
-    ldx #3
-    jsr CHKIN
+
+    stz ineof
+    stz inpos
+    stz insz
 
     rts
 
 reader:
-    ldx #$ff
+; OK, let's do this by buffering 128 bytes at a time.
+; So, what's the plan?
+; First, see if there's data in the inbuf.
+; Let's see how I'd do this in C first.
+; let's think of it from the caller's point of view first.
+; char byte;
+; while (reader(&byte) == 0) {
+;   // Go do whatever with byte.
+; }
+;
+; char accumulator;
+                                    ; int reader() {
+    ldy #$00                        ;     int y = 0x00; // Tho, eventually we'll have to return it as _x_
+    ldx inpos
+    cpx insz
+    
+;     if (inpos >= insz) {
+;         if (ineof)) x = 0xff; // We've exhausted the inbuf, _and_ we already reached ineof.
+;         else {
+;             replenish_inbuf();
+;             // Because of the nature of how the cx16/c64 handle ineof, if we've replenished the inbuf
+;             // we're _guaranteed_ to have at least one byte in the inbuf. (Otherwise, we'd already
+;             // have been at ineof).
+;             accumulator = inbuf[insz];
+;             insz++;
+;         }
+;     }
+;     else {
+;         accumulator = inbuf[insz];
+;         insz++;
+;     }
+; 
+;     return x
+; }
+
+replenish_inbuf:                    ; void replenish_inbuf() {
+    stz insz                        ;     insz = 0;
+    stz inpos                       ;     inpos = 0;
+replenish_inbuf_loop:               ;     while (1) {
+    ldx #5
+    jsr CHKIN
+    jsr CHRIN
+    tay                             ;         y = readbyte()
     jsr READST
     and #$40
-    beq done
-    jsr CHRIN
-    ldx #00
+    cmp #$40
+    bne assign_to_buffer            ;         if ateof() { // READST
+    lda #$ff
+    sta ineof                       ;             ineof = 1
+                                    ;         }
+assign_to_buffer:
+    tya                             ;         inbuf[insz] = y
+    ldx insz
+    sta inbuf, x
+    inx
+    stx insz                        ;         insz++;
+    cpx #$80
+    bne replenish_inbuf_loop        ;         if (insz >= 128) break;
+                                    ;     }
+    rts                             ; }
+
 done:
     rts
 
 close_infile:
-    lda #3
+    lda #5
     jsr CLOSE
     rts
+
+ineof:
+    .byte $00
+
+insz:
+    .byte $00
+
+inpos:
+    .byte $00
+
+inbuf:
+    .res 129
 
 infname:
     .asciiz "cknight.cs1,s,r"
@@ -104,18 +162,26 @@ open_outfile:
     ldy #4
     jsr SETLFS
     jsr OPEN
-    ldx #4
-    jsr CHKOUT
+
+    stz outpos
     rts
 
 writer:
+    tay
+    ldx #4
+    jsr CHKOUT
+    tya
     jsr CHROUT
     rts
 
 close_outfile:
+; We need to flush the buffer if it's there now.
     lda #4
     jsr CLOSE
     rts
+
+outpos:
+    .byte $00
 
 outfname:
     .asciiz "cknight.gif,s,w"

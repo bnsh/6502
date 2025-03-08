@@ -1,4 +1,4 @@
-PRGS=SIMPLER.PRG SIMPLE.PRG
+PRGS=SIMPLER.PRG SIMPLE.PRG BRANCH_TESTS.PRG
 MAPS=$(PRGS:PRG=MAP)
 
 SRCS=$(wildcard *.asm)
@@ -10,15 +10,22 @@ clean:
 	rm -f $(OBJS) $(PRGS) $(MAPS)
 
 run:
-	x16emu -debug 080d -prg SIMPLE.PRG -run -scale 2
+	x16emu -debug 080d -prg BRANCH_TESTS.PRG -run -scale 2
 
 push-%: all
 	rsync -avz -e ssh --delete --progress $(HOME)/src/6502/cx16/debug/ $(*):src/6502/cx16/debug/
 
-SIMPLER.MAP SIMPLER.PRG: simpler.o debug_registers.o
+branch_tests.asm: branch_tests.py
+	python3 $(^) > $(@)
+
+
+BRANCH_TESTS.MAP BRANCH_TESTS.PRG: branch_tests.o debug_registers.o writeutils.o
+	cl65 -m BRANCH_TESTS.MAP -o BRANCH_TESTS.PRG -Wl -S,2049 -t cx16 -C cx16-asm.cfg $(^)
+
+SIMPLER.MAP SIMPLER.PRG: simpler.o debug_registers.o writeutils.o
 	cl65 -m SIMPLER.MAP -o SIMPLER.PRG -Wl -S,2049 -t cx16 -C cx16-asm.cfg $(^)
 
-SIMPLE.MAP SIMPLE.PRG: simple.o debug_registers.o
+SIMPLE.MAP SIMPLE.PRG: simple.o debug_registers.o writeutils.o
 	cl65 -m SIMPLE.MAP -o SIMPLE.PRG -Wl -S,2049 -t cx16 -C cx16-asm.cfg $(^)
 
 %.o: %.asm
