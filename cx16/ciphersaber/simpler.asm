@@ -1,4 +1,3 @@
-.import debug_registers
 ; https://github.com/X16Community/x16-docs/blob/master/X16%20Reference%20-%2005%20-%20KERNAL.md
 CHKIN = $FFC6
 CHKOUT = $FFC9
@@ -24,14 +23,21 @@ status: .byte $00
     .byte $00, $00, $00             ; end of program
 
 ; Copy simple.cs1 to simple.cpy
-    jsr openoutfile
     jsr openinfile
+    jsr openoutfile
 
     jsr CHRIN
+; I don't understand what is happening here.
+; if I don't call openoutfile and set the break point here
+; I can see the accumulator is #$8d which _is_ what the
+; first byte of SIMPLE.CS1 really _is_.
+; But, if I then call openoutfile then it reads
+; 0x00. READST is of no use, it returns there's no
+; error.
     jsr CHROUT
 
-    jsr closeinfile
     jsr closeoutfile
+    jsr closeinfile
     jsr CLRCHN
     rts
 
