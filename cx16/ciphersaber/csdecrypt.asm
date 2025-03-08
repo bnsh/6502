@@ -1,4 +1,3 @@
-.org $0801 ; start at address 2049 (basic's start address.)
 .import key_setup, cipher, cipher_reader_funcaddr, cipher_writer_funcaddr
 .importzp cleartext_address, ciphertext_address, key_address, iv_address, rounds
 
