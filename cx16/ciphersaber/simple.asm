@@ -60,21 +60,21 @@ loop:
     rts
 
 openinfile:
-;; I _think_ this is doing the equivalent in BASIC of `open 3, 8, 3, "simple.cs1,s,r"`
+;; I _think_ this is doing the equivalent in BASIC of `open 5, 8, 5, "simple.cs1,s,r"`
     lda #infname_end-infname
     ldx #<infname
     ldy #>infname
     jsr SETNAM
-    lda #3                          ; open 3, 8, 3, 
+    lda #5                          ; open 5, 8, 5, 
     ldx #8
-    ldy #3
+    ldy #5
     jsr SETLFS
     jsr OPEN
     rts
 
 closeinfile:
-;; I _think_ this is doing the equivalent in BASIC of `close 3`
-    lda #3
+;; I _think_ this is doing the equivalent in BASIC of `close 5`
+    lda #5
     jsr CLOSE
     rts
 
