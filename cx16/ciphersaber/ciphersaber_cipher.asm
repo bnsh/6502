@@ -74,12 +74,20 @@ done:
 cipher_reader_funcaddr:
     .addr $0000
 reader_routine:
+; This is "0000", because it gets overwritten above, by whatever value our caller
+; made this. Essentially, the caller populates `cipher_reader_funcaddr` and
+; above we copy that in here. There is likely a better way of doing this,
+; but I didn't want the caller to write to `reader_routine+1` directly.
     jmp $0000
     rts
 
 cipher_writer_funcaddr:
     .addr $0000
 writer_routine:
+; This is "0000", because it gets overwritten above, by whatever value our caller
+; made this. Essentially, the caller populates `cipher_writer_funcaddr` and
+; above we copy that in here. There is likely a better way of doing this,
+; but I didn't want the caller to write to `writer_routine+1` directly.
     jmp $0000
     rts
 

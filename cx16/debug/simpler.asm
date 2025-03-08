@@ -1,16 +1,6 @@
 .import debug_registers
-; https://github.com/X16Community/x16-docs/blob/master/X16%20Reference%20-%2005%20-%20KERNAL.md
-CHKIN = $FFC6
-CHKOUT = $FFC9
-CHRIN  = $FFCF
-CHROUT = $FFD2
-CLOSE = $FFC3
-CLRCHN = $FFCC
-OPEN = $FFC0
-READST = $FFB7
-RESTOR = $FF8A
-SETLFS = $FFBA
-SETNAM = $FFBD
+
+.include "kernal.inc"
 
 .segment "ZEROPAGE"
 inchar: .byte $00
@@ -27,16 +17,9 @@ status: .byte $00
     jsr openinfile
     jsr openoutfile
 
-    ldx #3
+    ldx #5
     jsr CHKIN
     jsr CHRIN
-; I don't understand what is happening here.
-; if I don't call openoutfile and set the break point here
-; I can see the accumulator is #$8d which _is_ what the
-; first byte of SIMPLE.CS1 really _is_.
-; But, if I then call openoutfile then it reads
-; 0x00. READST is tells me $42 (End of File ($40) and ??? ($02)).
-; But, I don't know what to make of that.
     tay
 
     ldx #4

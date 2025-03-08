@@ -1,4 +1,4 @@
-PRGS=SIMPLER.PRG SIMPLE.PRG CSENCRYPT.PRG CSDECRYPT.PRG
+PRGS=CSENCRYPT.PRG CSDECRYPT.PRG
 MAPS=$(PRGS:PRG=MAP)
 
 SRCS=$(wildcard *.asm)
@@ -21,12 +21,6 @@ run:
 
 push-%: all
 	rsync -avz -e ssh --delete --progress $(HOME)/src/6502/cx16/ciphersaber/ $(*):src/6502/cx16/ciphersaber/
-
-SIMPLER.MAP SIMPLER.PRG: simpler.o debug_registers.o
-	cl65 -m SIMPLER.MAP -o SIMPLER.PRG -Wl -S,2049 -t cx16 -C cx16-asm.cfg $(^)
-
-SIMPLE.MAP SIMPLE.PRG: simple.o debug_registers.o
-	cl65 -m SIMPLE.MAP -o SIMPLE.PRG -Wl -S,2049 -t cx16 -C cx16-asm.cfg $(^)
 
 CSENCRYPT.MAP CSENCRYPT.PRG: csencrypt.o $(CSCOMMON_OBJS)
 	cl65 -m CSENCRYPT.MAP -o CSENCRYPT.PRG -Wl -S,2049 -t cx16 -C cx16-asm.cfg $(^)

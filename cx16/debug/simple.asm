@@ -1,16 +1,6 @@
 .import debug_registers
-; https://github.com/X16Community/x16-docs/blob/master/X16%20Reference%20-%2005%20-%20KERNAL.md
-CHKIN = $FFC6
-CHKOUT = $FFC9
-CHRIN  = $FFCF
-CHROUT = $FFD2
-CLOSE = $FFC3
-CLRCHN = $FFCC
-OPEN = $FFC0
-READST = $FFB7
-RESTOR = $FF8A
-SETLFS = $FFBA
-SETNAM = $FFBD
+
+.include "kernal.inc"
 
 .segment "ZEROPAGE"
 inchar: .byte $00
@@ -28,26 +18,20 @@ status: .byte $00
     jsr openinfile
     jsr openoutfile
 loop:
-;; I _think_ this is doing the equivalent in BASIC of
-;; ```
-;; top:
-;;     r$ = get# 3
-;;     if r$ = "" then goto done
-;; goto top
-;; done:
-;; close 3
-;; close 4
-;; ```
-    ldx #3
+    ldx #5
     jsr CHKIN
     jsr CHRIN
+
     sta inchar
     jsr READST
     sta status
+
     ldx #4
     jsr CHKOUT
     lda inchar
     jsr CHROUT
+    lda inchar
+
     lda status
     and #$40
     cmp #$40
