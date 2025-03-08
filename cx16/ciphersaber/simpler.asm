@@ -24,35 +24,15 @@ status: .byte $00
     .byte $00, $00, $00             ; end of program
 
 ; Copy simple.cs1 to simple.cpy
-    jsr debug_registers
-    jsr openinfile
     jsr openoutfile
-loop:
-;; I _think_ this is doing the equivalent in BASIC of
-;; ```
-;; top:
-;;     r$ = get# 3
-;;     if r$ = "" then goto done
-;; goto top
-;; done:
-;; close 3
-;; close 4
-;; ```
+    jsr openinfile
+
     jsr CHRIN
-    sta inchar
-    jsr READST
-    sta status
-    lda inchar
     jsr CHROUT
-    lda status
-    and #$40
-    cmp #$40
-    bne loop
 
     jsr closeinfile
     jsr closeoutfile
     jsr CLRCHN
-    jsr debug_registers
     rts
 
 openinfile:

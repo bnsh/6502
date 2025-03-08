@@ -8,6 +8,7 @@ CHKOUT = $FFC9
 CHRIN  = $FFCF
 CHROUT = $FFD2
 CLOSE = $FFC3
+CLRCHN = $FFCC
 OPEN = $FFC0
 READST = $FFB7
 RESTOR = $FF8A
@@ -56,7 +57,7 @@ SETNAM = $FFBD
 
     jsr close_infile
     jsr close_outfile
-    jsr RESTOR
+    jsr CLRCHN
 
     rts
 

@@ -1,5 +1,5 @@
 .export key_mix
-.exportzp i, j, roundpos, keypos
+.exportzp roundpos, keypos
 .import cs_state_array, keyiv_array, keyiv_length
 .importzp rounds
 
@@ -39,7 +39,7 @@ i_loop:
     beq end_i
 i_loop_body:
 
-    ; jsr debug
+    ; jsr debug_ciphersaber
 
     ;       j += state[i]
     ldx i
