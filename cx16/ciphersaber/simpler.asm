@@ -27,6 +27,8 @@ status: .byte $00
     jsr openinfile
     jsr openoutfile
 
+    ldx #3
+    jsr CHKIN
     jsr CHRIN
 ; I don't understand what is happening here.
 ; if I don't call openoutfile and set the break point here
@@ -35,8 +37,11 @@ status: .byte $00
 ; But, if I then call openoutfile then it reads
 ; 0x00. READST is tells me $42 (End of File ($40) and ??? ($02)).
 ; But, I don't know what to make of that.
-    jsr READST
-    jsr debug_registers
+    tay
+
+    ldx #4
+    jsr CHKOUT
+    tya
     jsr CHROUT
 
     jsr closeoutfile
@@ -55,8 +60,6 @@ openinfile:
     ldy #3
     jsr SETLFS
     jsr OPEN
-    ldx #3
-    jsr CHKIN
     rts
 
 closeinfile:
@@ -80,8 +83,6 @@ openoutfile:
     ldy #4
     jsr SETLFS
     jsr OPEN
-    ldx #4
-    jsr CHKOUT
     rts
 
 closeoutfile:

@@ -17,7 +17,7 @@ clean:
 	rm -f $(OBJS) $(PRGS) $(MAPS)
 
 run:
-	x16emu -debug 080d -prg SIMPLER.PRG -run -scale 2
+	x16emu -debug 080d -prg SIMPLE.PRG -run -scale 2
 
 push-%: all
 	rsync -avz -e ssh --delete --progress $(HOME)/src/6502/cx16/ciphersaber/ $(*):src/6502/cx16/ciphersaber/

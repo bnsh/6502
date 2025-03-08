@@ -38,10 +38,14 @@ loop:
 ;; close 3
 ;; close 4
 ;; ```
+    ldx #3
+    jsr CHKIN
     jsr CHRIN
     sta inchar
     jsr READST
     sta status
+    ldx #4
+    jsr CHKOUT
     lda inchar
     jsr CHROUT
     lda status
@@ -66,8 +70,6 @@ openinfile:
     ldy #3
     jsr SETLFS
     jsr OPEN
-    ldx #3
-    jsr CHKIN
     rts
 
 closeinfile:
@@ -91,8 +93,6 @@ openoutfile:
     ldy #4
     jsr SETLFS
     jsr OPEN
-    ldx #4
-    jsr CHKOUT
     rts
 
 closeoutfile:
