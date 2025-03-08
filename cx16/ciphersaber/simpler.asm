@@ -33,8 +33,10 @@ status: .byte $00
 ; I can see the accumulator is #$8d which _is_ what the
 ; first byte of SIMPLE.CS1 really _is_.
 ; But, if I then call openoutfile then it reads
-; 0x00. READST is of no use, it returns there's no
-; error.
+; 0x00. READST is tells me $42 (End of File ($40) and ??? ($02)).
+; But, I don't know what to make of that.
+    jsr READST
+    jsr debug_registers
     jsr CHROUT
 
     jsr closeoutfile
