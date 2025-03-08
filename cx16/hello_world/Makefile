@@ -10,4 +10,4 @@ push-%: all
 	rsync -avz -e ssh --delete --progress $(HOME)/src/6502/cx16/hello_world/ $(*):src/6502/cx16/hello_world/
 
 ${PRG}: $(SRCS)
-	cl65 -o $(@) -Wl -S,2049 -t cx16 -C cx16-asm.cfg $(^)
+	cl65 -o $(@) -t cx16 -C cx16-asm.cfg $(^)
