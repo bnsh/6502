@@ -4,6 +4,7 @@
 .importzp key_address, iv_address, rounds
 
 .include "kernal.inc"
+.include "sensible_unsigned_compares.inc"
 
 .segment "CODE"
 
@@ -71,7 +72,7 @@ copy_iv:
 copy_iv_while:
     lda copy_iv_idx
     cmp #10
-    bpl copy_iv_done
+    bge copy_iv_done
     jsr copy_func
 
     ldx copy_iv_idx

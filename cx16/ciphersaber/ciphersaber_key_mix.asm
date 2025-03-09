@@ -3,6 +3,8 @@
 .import cs_state_array, keyiv_array, keyiv_length
 .importzp rounds
 
+.include "sensible_unsigned_compares.inc"
+
 .segment "ZEROPAGE"
 ; Most of these names are to conform to the ciphersaber docs.
 i: .byte $00
@@ -19,13 +21,19 @@ key_mix:
     stz i
     stz j
     stz roundpos
+    stz roundpos+1
     stz keypos
 
     ; for (int roundpos=0; roundpos < rounds; ++roundpos) {
 round_loop:
+    lda roundpos+1
+    cmp rounds+1
+    beq round_compare_lo
+    bgt end_rounds
+round_compare_lo:
     lda roundpos
     cmp rounds
-    beq end_rounds
+    bge end_rounds
 
 round_body:
     ;   for (int i=0; i < 256; ++i) {
@@ -87,10 +95,13 @@ increment_i:
     ;   }
 end_i:
 
-; TODO: increment roundpos as a unsigned short.
     lda roundpos
     inc
     sta roundpos
+    cmp #$00
+    bne round_pos_not_rolled_over
+    inc roundpos+1
+round_pos_not_rolled_over:
     jmp round_loop
     ; }
 end_rounds:

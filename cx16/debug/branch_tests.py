@@ -7,16 +7,22 @@ def main():
     test = 0
 
     branch_lessons = [
-        ("beq", "`beq` is Branch on Equal. (No surprises here.)"),
-        ("bne", "`bne` is Branch on Not Equal. (No surprises here.)"),
-        ("bmi", "`bmi` is Branch on Less Than. The Minus, is somewhat non intuitive to _me_."),
-        ("bpl", "`bpl` is Branch on Greater Than or Equal. The Plus, is also somewhat non intuitive to _me_."),
+#         ("beq", "`beq` is Branch on Equal. (No surprises here.)"),
+#         ("bne", "`bne` is Branch on Not Equal. (No surprises here.)"),
+#         ("bmi", "`bmi` is Branch on Less Than. The Minus, is somewhat non intuitive to _me_."),
+#         ("bpl", "`bpl` is Branch on Greater Than or Equal. The Plus, is also somewhat non intuitive to _me_."),
+#         ("bcc", "`bcc` is Branch on Carry Clear. This is somewhat non intuitive to _me_."),
+#         ("bcs", "`bcs` is Branch on Carry Set. This is somewhat non intuitive to _me_."),
+#         ("bvc", "`bvc` is Branch on oVerflow Clear. This is somewhat non intuitive to _me_."),
+#         ("bvs", "`bvs` is Branch on oVerflow Set. This is somewhat non intuitive to _me_."),
+#         ("bgt", "`bgt` is Branch greater than")
     ]
 
     print("""
 .import debug_registers
 
 .include "kernal.inc"
+.include "sensible_unsigned_compares.inc"
 .include "writeutils.inc"
 
 .macro writestr_macro_nl addr
@@ -36,23 +42,24 @@ def main():
 """)
     for branch, lesson in branch_lessons:
         print(f"; Tests for {branch:s}")
-        for acc in (3, 4, 5):
-            print(f"""test{test:d}:
+        for acc in (0x00, 0x01, 0x7f, 0x80, 0x81, 0xfe, 0xff):
+            for cmp_ in (0x00, 0x01, 0x7f, 0x80, 0x81, 0xfe, 0xff):
+                print(f"""test{test:d}:
     lda #${acc:02x}
-    cmp #$04
-    {branch:s} {branch:s}{acc:d}cmp4_success
-    writestr_macro_nl {branch:s}{acc:d}cmp4_f
+    cmp #${cmp_:02x}
+    {branch:s} {branch:s}{acc:02x}cmp{cmp_:02x}_success
+    writestr_macro_nl {branch:s}{acc:02x}cmp{cmp_:02x}_f
     jmp test{test:d}_complete
-{branch:s}{acc:d}cmp4_success:
-    writestr_macro_nl {branch:s}{acc:d}cmp4_s
+{branch:s}{acc:02x}cmp{cmp_:02x}_success:
+    writestr_macro_nl {branch:s}{acc:02x}cmp{cmp_:02x}_s
     jmp test{test:d}_complete
-{branch:s}{acc:d}cmp4_s:
-    .asciiz "acc = {acc:d}, cmp 4, {branch:s} succeeds"
-{branch:s}{acc:d}cmp4_f:
-    .asciiz "acc = {acc:d}, cmp 4, {branch:s} fails"
+{branch:s}{acc:02x}cmp{cmp_:02x}_s:
+    .asciiz "acc = #${acc:02x}, cmp #${cmp_:02x}, {branch:s} succeeds"
+{branch:s}{acc:02x}cmp{cmp_:02x}_f:
+    .asciiz "acc = #${acc:02x}, cmp #${cmp_:02x}, {branch:s} fails"
 test{test:d}_complete:
 """)
-            test += 1
+                test += 1
 
         print(f"{branch:s}_lesson:")
         print(f"    writestr_macro_nl {branch:s}_lesson_s")

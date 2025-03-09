@@ -1,11 +1,13 @@
 .export writestr, writehexbyte_func
 .exportzp writestr_arg, writehexbyte_arg
 
+.include "sensible_unsigned_compares.inc"
+
 .macro writehex_nibble
 .scope
 ; Takes argument from accumulator
     cmp #$0a
-    bpl alpha ; bpl is zero or positive.
+    bgt alpha ; bpl is zero or positive.
     ; At this stage, our accumulator is between 0 and 9 inclusive and we want
     ; 0 to map to '0' and 9 to map to '9'. D-uh.
     clc
