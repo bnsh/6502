@@ -1,12 +1,1 @@
-; https://github.com/X16Community/x16-docs/blob/master/X16%20Reference%20-%2005%20-%20KERNAL.md
-CHKIN = $FFC6
-CHKOUT = $FFC9
-CHRIN  = $FFCF
-CHROUT = $FFD2
-CLOSE = $FFC3
-CLRCHN = $FFCC
-OPEN = $FFC0
-READST = $FFB7
-RESTOR = $FF8A
-SETLFS = $FFBA
-SETNAM = $FFBD
+../debug/kernal.inc

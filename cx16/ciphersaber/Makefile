@@ -4,6 +4,7 @@ MAPS=$(PRGS:PRG=MAP)
 SRCS=$(wildcard *.asm)
 OBJS=$(SRCS:asm=o)
 CSCOMMON_OBJS=\
+    randomstream.o \
     ciphersaber_cipher.o \
     ciphersaber_io.o \
     ciphersaber_key_zero.o \
@@ -23,7 +24,7 @@ run:
 push-%: all
 	rsync -avz -e ssh --delete --progress $(HOME)/src/6502/cx16/ciphersaber/ $(*):src/6502/cx16/ciphersaber/
 
-CSENCRYPT.MAP CSENCRYPT.PRG: csencrypt.o $(CSCOMMON_OBJS)
+CSENCRYPT.MAP CSENCRYPT.PRG: csencrypt.o $(CSCOMMON_OBJS) randomstream.o
 	cl65 -m CSENCRYPT.MAP -o CSENCRYPT.PRG -Wl -S,2049 -t cx16 -C cx16-asm.cfg $(^)
 
 CSDECRYPT.MAP CSDECRYPT.PRG: csdecrypt.o $(CSCOMMON_OBJS)

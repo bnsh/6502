@@ -3,7 +3,13 @@
 
 """Gain intuition about the branches."""
 
+import argparse
+
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--outputfn", "-o", type=str, required=True)
+    args = parser.parse_args()
+
     test = 0
 
     branch_lessons = [
@@ -18,7 +24,8 @@ def main():
 #         ("bgt", "`bgt` is Branch greater than")
     ]
 
-    print("""
+    with open(args.outputfn, "wt", encoding="utf-8") as ofp:
+        ofp.write("""
 .import debug_registers
 
 .include "kernal.inc"
@@ -40,11 +47,11 @@ def main():
     .byte $00, $00, $00             ; end of program
 
 """)
-    for branch, lesson in branch_lessons:
-        print(f"; Tests for {branch:s}")
-        for acc in (0x00, 0x01, 0x7f, 0x80, 0x81, 0xfe, 0xff):
-            for cmp_ in (0x00, 0x01, 0x7f, 0x80, 0x81, 0xfe, 0xff):
-                print(f"""test{test:d}:
+        for branch, lesson in branch_lessons:
+            ofp.write(f"; Tests for {branch:s}\n")
+            for acc in (0x00, 0x01, 0x7f, 0x80, 0x81, 0xfe, 0xff):
+                for cmp_ in (0x00, 0x01, 0x7f, 0x80, 0x81, 0xfe, 0xff):
+                    ofp(f"""test{test:d}:
     lda #${acc:02x}
     cmp #${cmp_:02x}
     {branch:s} {branch:s}{acc:02x}cmp{cmp_:02x}_success
@@ -58,21 +65,22 @@ def main():
 {branch:s}{acc:02x}cmp{cmp_:02x}_f:
     .asciiz "acc = #${acc:02x}, cmp #${cmp_:02x}, {branch:s} fails"
 test{test:d}_complete:
+
 """)
                 test += 1
 
-        print(f"{branch:s}_lesson:")
-        print(f"    writestr_macro_nl {branch:s}_lesson_s")
-        print( "    lda #$0d")
-        print( "    jsr CHROUT")
-        print(f"    jmp {branch:s}_lesson_complete")
-        print(f"{branch:s}_lesson_s:")
-        print(f"    .asciiz \"{lesson:s}\"")
-        print(f"{branch:s}_lesson_complete:")
+            ofp.write(f"""{branch:s}_lesson:
+    writestr_macro_nl {branch:s}_lesson_s
+    lda #$0d
+    jsr CHROUT
+    jmp {branch:s}_lesson_complete
+{branch:s}_lesson_s:
+    .asciiz "{lesson:s}"
+{branch:s}_lesson_complete:
 
-        print()
+""")
 
-    print("    rts")
+        ofp("    rts\n")
 
 if __name__ == "__main__":
     main()

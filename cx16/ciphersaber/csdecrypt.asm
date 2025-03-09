@@ -24,7 +24,7 @@
     lda #>iv
     sta iv_address+1
 
-ROUNDS=1
+ROUNDS=10
     lda #<ROUNDS
     sta rounds
     lda #>ROUNDS
@@ -52,7 +52,7 @@ ROUNDS=1
     lda #>outfile_writer
     sta cipher_writer_funcaddr+1
 
-    jsr copy_iv
+    jsr copy_iv_from_input
     jsr key_setup
     jsr cipher
 
@@ -62,7 +62,7 @@ ROUNDS=1
 
     rts
 
-copy_iv:
+copy_iv_from_input:
     lda #<infile_reader
     sta copy_func_addr
     lda #>infile_reader

@@ -18,19 +18,17 @@ first: .byte $00
 
 key_mix:
     ; Initialize the variables.
-    stz i
     stz j
     stz roundpos
     stz roundpos+1
-    stz keypos
 
     ; for (int roundpos=0; roundpos < rounds; ++roundpos) {
 round_loop:
+    stz i
+    stz keypos              ; keypos is i % keylen
     lda roundpos+1
     cmp rounds+1
-    beq round_compare_lo
     bgt end_rounds
-round_compare_lo:
     lda roundpos
     cmp rounds
     bge end_rounds
