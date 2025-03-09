@@ -40,9 +40,9 @@ straight_copy_end_while:
     rts
 
 infname:
-    .asciiz "cknight.cs1,s,r"
+    .asciiz "cknightcx16.cs256,s,r"
 infname_end:
 
 outfname:
-    .asciiz "cknight.cpy,s,w"
+    .asciiz "cknightcx16.cpy,s,w"
 outfname_end:
