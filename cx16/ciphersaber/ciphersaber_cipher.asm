@@ -16,14 +16,6 @@ j:
 
 .segment "CODE"
 cipher:
-    lda cipher_reader_funcaddr
-    sta reader_routine+1
-    lda cipher_reader_funcaddr+1
-    sta reader_routine+2
-    lda cipher_writer_funcaddr
-    sta writer_routine+1
-    lda cipher_writer_funcaddr+1
-    sta writer_routine+2
     stz i
     stz j
 
@@ -64,31 +56,28 @@ cipher_top:
     adc cs_state_array, x
     tax
     lda data
-    adc cs_state_array, x
+    eor cs_state_array, x
+
     jsr writer_routine
     jmp cipher_top
 
 done:
     rts
 
-cipher_reader_funcaddr:
-    .addr $0000
 reader_routine:
-; This is "0000", because it gets overwritten above, by whatever value our caller
-; made this. Essentially, the caller populates `cipher_reader_funcaddr` and
-; above we copy that in here. There is likely a better way of doing this,
-; but I didn't want the caller to write to `reader_routine+1` directly.
-    jmp $0000
+    .byte $20           ; this is the opcode for jsr
+cipher_reader_funcaddr:
+;; Effectively we are _constructing_ a jsr {{reader_routine}} that the user will change the address to when
+;; they call it.
+    .addr $0000
     rts
 
-cipher_writer_funcaddr:
-    .addr $0000
 writer_routine:
-; This is "0000", because it gets overwritten above, by whatever value our caller
-; made this. Essentially, the caller populates `cipher_writer_funcaddr` and
-; above we copy that in here. There is likely a better way of doing this,
-; but I didn't want the caller to write to `writer_routine+1` directly.
-    jmp $0000
+    .byte $20           ; this is the opcode for jsr
+cipher_writer_funcaddr:
+;; Effectively we are _constructing_ a jsr {{writer_routine}} that the user will change the address to when
+;; they call it.
+    .addr $0000
     rts
 
 swap:

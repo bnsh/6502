@@ -1,6 +1,6 @@
 .export debug_ciphersaber
 .import cs_state_array
-.importzp cleartext_address, ciphertext_address, key_address, rounds
+.importzp key_address
 .importzp roundpos, keypos
 
 .include "writeutils.inc"

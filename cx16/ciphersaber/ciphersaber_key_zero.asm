@@ -14,4 +14,4 @@ ciphertext_address:
     .addr $0000
 
 rounds:
-    .byte $00
+    .word $0000

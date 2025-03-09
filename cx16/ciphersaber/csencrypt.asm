@@ -1,5 +1,5 @@
 .import key_setup
-.importzp cleartext_address, ciphertext_address, key_address, iv_address, rounds
+.importzp key_address, iv_address, rounds
 
 .segment "CODE"
 
@@ -14,15 +14,23 @@
     lda #>key
     sta key_address+1
 
+    jsr seed_iv
+
     lda #<iv
     sta iv_address
     lda #>iv
     sta iv_address+1
 
-    lda #21
+ROUNDS=21
+    lda #<ROUNDS
     sta rounds
+    lda #>ROUNDS
+    sta rounds+1
 
     jsr key_setup
+    rts
+
+seed_iv:
     rts
 
 key:
@@ -34,3 +42,11 @@ iv:
 ; be initialized to a random value 
     .byte $02, $00, $05, $07, $0b
     .byte $0d, $11, $13, $17, $1d
+
+infname:
+    .asciiz "cknight.gif,s,r"
+infname_end:
+
+outfname:
+    .asciiz "cknight.cs1,s,w"
+outfname_end:

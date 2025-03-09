@@ -1,10 +1,11 @@
-PRGS=CSENCRYPT.PRG CSDECRYPT.PRG
+PRGS=CSENCRYPT.PRG CSDECRYPT.PRG CSTEST.PRG
 MAPS=$(PRGS:PRG=MAP)
 
 SRCS=$(wildcard *.asm)
 OBJS=$(SRCS:asm=o)
 CSCOMMON_OBJS=\
     ciphersaber_cipher.o \
+    ciphersaber_io.o \
     ciphersaber_key_zero.o \
     ciphersaber_key_initialization_vector.o \
     ciphersaber_key_initialize_state_array.o \
@@ -27,6 +28,9 @@ CSENCRYPT.MAP CSENCRYPT.PRG: csencrypt.o $(CSCOMMON_OBJS)
 
 CSDECRYPT.MAP CSDECRYPT.PRG: csdecrypt.o $(CSCOMMON_OBJS)
 	cl65 -m CSDECRYPT.MAP -o CSDECRYPT.PRG -Wl -S,2049 -t cx16 -C cx16-asm.cfg $(^)
+
+CSTEST.MAP CSTEST.PRG: cstest.o ciphersaber_io.o
+	cl65 -m CSTEST.MAP -o CSTEST.PRG -Wl -S,2049 -t cx16 -C cx16-asm.cfg $(^)
 
 %.o: %.asm
 	@ci -q -l -m- -t- $(^)

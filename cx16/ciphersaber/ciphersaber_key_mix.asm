@@ -7,7 +7,7 @@
 ; Most of these names are to conform to the ciphersaber docs.
 i: .byte $00
 j: .byte $00
-roundpos: .byte $00
+roundpos: .word $0000
 keypos: .byte $00
 swap: .byte $00
 first: .byte $00
@@ -87,6 +87,7 @@ increment_i:
     ;   }
 end_i:
 
+; TODO: increment roundpos as a unsigned short.
     lda roundpos
     inc
     sta roundpos
