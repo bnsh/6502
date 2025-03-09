@@ -14,6 +14,8 @@
     .byte $32, $30, $36, $31        ; 2061
     .byte $00, $00, $00             ; end of program
 
+    jsr delete_first                ; This is _super annoying_. I wish it could just overwrite.
+
     lda #<key
     sta key_address
     lda #>key
@@ -24,7 +26,7 @@
     lda #>iv
     sta iv_address+1
 
-ROUNDS=2
+ROUNDS=256
     lda #<ROUNDS
     sta rounds
     lda #>ROUNDS
@@ -104,6 +106,18 @@ copy_func_addr:
     .addr $0000
     rts
 
+delete_first:
+    lda #deletefn_end-deletefn-1
+    ldx #<deletefn
+    ldy #>deletefn
+    jsr SETNAM
+    lda #1
+    ldx #8
+    ldy #15
+    jsr SETLFS
+    jsr OPEN
+    jsr CLOSE
+    rts
 
 key:
     .literal "CommanderX16!"
@@ -112,13 +126,17 @@ key:
 iv:
 ; This should _not_ be hardcoded like this. It should
 ; be initialized to a random value 
-    .byte $02, $00, $05, $07, $0b
+    .byte $02, $03, $05, $07, $0b
     .byte $0d, $11, $13, $17, $1d
 
 infname:
-    .asciiz "cknightcommander.gif,s,r"
+    .asciiz "cknightcx16.gif,s,r"
 infname_end:
 
 outfname:
-    .asciiz "cknightcommander.cs2,s,w"
+    .asciiz "cknightcx16.cs256,s,w"
 outfname_end:
+
+deletefn:
+    .asciiz "s:cknightcx16.cs256"
+deletefn_end:

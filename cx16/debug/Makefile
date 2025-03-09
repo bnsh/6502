@@ -13,7 +13,7 @@ PYLINT3=$(addprefix .,$(PYTHON:py=pylint3))
 all: pylint3 $(GENERATED) $(OBJS) $(PRGS) $(MAPS)
 
 clean:
-	rm -f $(OBJS) $(PRGS) $(MAPS)
+	rm -f $(GENERATED) $(OBJS) $(PRGS) $(MAPS)
 
 run:
 	x16emu -debug 080d -prg BRANCH_TESTS.PRG -run -scale 2

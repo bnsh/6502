@@ -28,8 +28,9 @@ round_loop:
     stz keypos              ; keypos is i % keylen
     lda roundpos+1
     cmp rounds+1
-    bgt end_rounds
-    lda roundpos
+    bgt end_rounds          ; if the #>roundpos > #>rounds then we're done
+    blt round_body          ; if the #>roundpos < #>rounds then we continue
+    lda roundpos            ; it the #>roundpos == #>rounds we have to chech #<roundpos and #< roundpos+1
     cmp rounds
     bge end_rounds
 

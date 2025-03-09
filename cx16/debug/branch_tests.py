@@ -80,7 +80,7 @@ test{test:d}_complete:
 
 """)
 
-        ofp("    rts\n")
+        ofp.write("    rts\n")
 
 if __name__ == "__main__":
     main()
