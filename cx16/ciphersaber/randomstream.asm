@@ -1,5 +1,6 @@
 .export randomstream
 
+.include "kernal.inc"
 .include "sensible_unsigned_compares.inc"
 
 randomstream:
@@ -33,7 +34,7 @@ bitstream:
     cmp #$00
     bne havedata
 refill:
-    jsr $fecf ; https://github.com/x16community/x16-docs/blob/master/x16%20reference%20-%2005%20-%20kernal.md#function-name-entropy_get
+    jsr ENTROPY_GET ; https://github.com/x16community/x16-docs/blob/master/x16%20reference%20-%2005%20-%20kernal.md#function-name-entropy_get
     sta x_n
     jsr lcg
     lsr
