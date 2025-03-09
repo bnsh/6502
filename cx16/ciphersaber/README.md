@@ -29,7 +29,8 @@ The "main" programs are:
 - [ciphersaber_key_zero.asm](ciphersaber_key_zero.asm): _Zero page locations. (Tho, there are other zero page addresses in use, so this is somewhat misleading, unfortunately.)_
 - [cknightcx16.gif](cknightcx16.gif): _My signed Ciphersaber certificate! Go get your own! See [cknight.cs1](https://cablemodem.hex21.com/ciphersaber/#testfiles)_
 - [cknightcx16.cs256](cknightcx16.cs256): _The above Ciphersaber certificate encrypted with "CommanderX16!" and rounds=256_
-- [kernal.inc](../debug/kernal.inc) _These are just all the kernal routines from [KERNAL.md](https://github.com/X16Community/x16-docs/blob/master/X16%20Reference%20-%2005%20-%20KERNAL.md)_
+- **kernal.inc** _These are just all the kernal routines from [KERNAL.md](https://github.com/X16Community/x16-docs/blob/master/X16%20Reference%20-%2005%20-%20KERNAL.md)_.
+  Tho, **kernal.inc** isn't _actually_ in the repo, it is constructed from [kernal.py](../debug/kernal.py) and [kernal.csv](../debug/kernal.csv) in the [debug](../debug/) folder.
 - [Makefile](Makefile): _Build automation_
 - [README.md](README.md): _This file._
 
