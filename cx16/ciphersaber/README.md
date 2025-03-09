@@ -11,8 +11,8 @@ The "main" programs are:
 
 # Roadmap
 
-- [csencrypt.asm](csencrypt.asm)   # Encryption program
-- [csdecrypt.asm](csdecrypt.asm)   # Decryption program
+- [csencrypt.asm](csencrypt.asm): _Encryption program_
+- [csdecrypt.asm](csdecrypt.asm): _Decryption program_
 - [cstest.asm](cstest.asm): _File I/O test program_
 - [ciphersaber_cipher.asm](ciphersaber_cipher.asm): _Core cipher logic_
 - [ciphersaber_key_initialization_vector.asm](ciphersaber_key_initialization_vector.asm): _Copies the key address, iv etc, into place._
