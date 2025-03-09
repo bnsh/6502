@@ -11,30 +11,27 @@ The "main" programs are:
 
 # Files
 
-```tree
-.
-├── [csencrypt.asm](csencrypt.asm)   # Encryption program
-├── [csdecrypt.asm](csdecrypt.asm)   # Decryption program
-├── [cstest.asm](cstest.asm)    # File I/O test program
-├── [ciphersaber_cipher.asm](ciphersaber_cipher.asm)    # Core cipher logic
-├── [ciphersaber_key_initialization_vector.asm](ciphersaber_key_initialization_vector.asm)    # Copies the key address, iv etc, into place.
-├── [ciphersaber_key_initialize_state_array.asm](ciphersaber_key_initialize_state_array.asm)    # Initializes the RC4 state array
-├── [ciphersaber_key_mix.asm](ciphersaber_key_mix.asm)    # Key Mixing routine.
-├── [ciphersaber_io.asm](ciphersaber_io.asm)    # File reading & writing
-├── [ciphersaber_key_setup.asm](ciphersaber_key_setup.asm)    # Calls key setup functions
-├── [randomstream.asm](randomstream.asm)    # Random number generator
-├── [debug_ciphersaber.asm](debug_ciphersaber.asm)    # Debugging specific to ciphersaber
-├── [debug_registers.asm](../debug/debug_registers.asm)    # Register debugger (I don't think I actually use either of these anymore, but it _was_ handy while I was writing this.)
-├── [writeutils.inc](../debug/writeutils.inc)    # These are utilities to write to the console. I think they're really only used by the debuggers.
-├── [writeutils.asm](../debug/writeutils.asm)
-├── [sensible_unsigned_compares.inc](../debug/sensible_unsigned_compares.inc)    # Friendlier (to me, anyway) comparison *pseudo* op-codes, like `blt`, `ble`, `bgt` and `bge` as opposed to `bcs` and `bcc`)
-├── [ciphersaber_key_zero.asm](ciphersaber_key_zero.asm)    # Zero page locations. (Tho, there are other zero page addresses in use, so this is somewhat misleading, unfortunately.)
-├── [cknightcx16.gif](cknightcx16.gif)    # My signed Ciphersaber certificate! Go get your own! See [cknight.cs1](https://cablemodem.hex21.com/ciphersaber/#testfiles)
-├── [cknightcx16.cs256](cknightcx16.cs256)    # The above Ciphersaber certificate encrypted with "CommanderX16!" and rounds=256
-├── [kernal.inc](../debug/kernal.inc)	# These are just all the kernal routines from [KERNAL.md](https://github.com/X16Community/x16-docs/blob/master/X16%20Reference%20-%2005%20-%20KERNAL.md)
-├── [Makefile](Makefile)    # Build automation
-└── [README.md](README.md)    # This file.
-```
+- [csencrypt.asm](csencrypt.asm)   # Encryption program
+- [csdecrypt.asm](csdecrypt.asm)   # Decryption program
+- [cstest.asm](cstest.asm)    # File I/O test program
+- [ciphersaber_cipher.asm](ciphersaber_cipher.asm)    # Core cipher logic
+- [ciphersaber_key_initialization_vector.asm](ciphersaber_key_initialization_vector.asm)    # Copies the key address, iv etc, into place.
+- [ciphersaber_key_initialize_state_array.asm](ciphersaber_key_initialize_state_array.asm)    # Initializes the RC4 state array
+- [ciphersaber_key_mix.asm](ciphersaber_key_mix.asm)    # Key Mixing routine.
+- [ciphersaber_io.asm](ciphersaber_io.asm)    # File reading & writing
+- [ciphersaber_key_setup.asm](ciphersaber_key_setup.asm)    # Calls key setup functions
+- [randomstream.asm](randomstream.asm)    # Random number generator
+- [debug_ciphersaber.asm](debug_ciphersaber.asm)    # Debugging specific to ciphersaber
+- [debug_registers.asm](../debug/debug_registers.asm)    # Register debugger (I don't think I actually use either of these anymore, but it _was_ handy while I was writing this.)
+- [writeutils.inc](../debug/writeutils.inc)    # These are utilities to write to the console. I think they're really only used by the debuggers.
+- [writeutils.asm](../debug/writeutils.asm)
+- [sensible_unsigned_compares.inc](../debug/sensible_unsigned_compares.inc)    # Friendlier (to me, anyway) comparison *pseudo* op-codes, like `blt`, `ble`, `bgt` and `bge` as opposed to `bcs` and `bcc`)
+- [ciphersaber_key_zero.asm](ciphersaber_key_zero.asm)    # Zero page locations. (Tho, there are other zero page addresses in use, so this is somewhat misleading, unfortunately.)
+- [cknightcx16.gif](cknightcx16.gif)    # My signed Ciphersaber certificate! Go get your own! See [cknight.cs1](https://cablemodem.hex21.com/ciphersaber/#testfiles)
+- [cknightcx16.cs256](cknightcx16.cs256)    # The above Ciphersaber certificate encrypted with "CommanderX16!" and rounds=256
+- [kernal.inc](../debug/kernal.inc)	# These are just all the kernal routines from [KERNAL.md](https://github.com/X16Community/x16-docs/blob/master/X16%20Reference%20-%2005%20-%20KERNAL.md)
+- [Makefile](Makefile)    # Build automation
+- [README.md](README.md)    # This file.
 
 # TODO
 - I'd _love_ to be able to just write a
