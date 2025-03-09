@@ -13,25 +13,25 @@ The "main" programs are:
 
 - [csencrypt.asm](csencrypt.asm)   # Encryption program
 - [csdecrypt.asm](csdecrypt.asm)   # Decryption program
-- [cstest.asm](cstest.asm)    # File I/O test program
-- [ciphersaber_cipher.asm](ciphersaber_cipher.asm)    # Core cipher logic
-- [ciphersaber_key_initialization_vector.asm](ciphersaber_key_initialization_vector.asm)    # Copies the key address, iv etc, into place.
-- [ciphersaber_key_initialize_state_array.asm](ciphersaber_key_initialize_state_array.asm)    # Initializes the RC4 state array
-- [ciphersaber_key_mix.asm](ciphersaber_key_mix.asm)    # Key Mixing routine.
-- [ciphersaber_io.asm](ciphersaber_io.asm)    # File reading & writing
-- [ciphersaber_key_setup.asm](ciphersaber_key_setup.asm)    # Calls key setup functions
-- [randomstream.asm](randomstream.asm)    # Random number generator
-- [debug_ciphersaber.asm](debug_ciphersaber.asm)    # Debugging specific to ciphersaber
-- [debug_registers.asm](../debug/debug_registers.asm)    # Register debugger (I don't think I actually use either of these anymore, but it _was_ handy while I was writing this.)
-- [writeutils.inc](../debug/writeutils.inc)    # These are utilities to write to the console. I think they're really only used by the debuggers.
+- [cstest.asm](cstest.asm): _File I/O test program_
+- [ciphersaber_cipher.asm](ciphersaber_cipher.asm): _Core cipher logic_
+- [ciphersaber_key_initialization_vector.asm](ciphersaber_key_initialization_vector.asm): _Copies the key address, iv etc, into place._
+- [ciphersaber_key_initialize_state_array.asm](ciphersaber_key_initialize_state_array.asm): _Initializes the RC4 state array_
+- [ciphersaber_key_mix.asm](ciphersaber_key_mix.asm): _Key Mixing routine._
+- [ciphersaber_io.asm](ciphersaber_io.asm): _File reading & writing_
+- [ciphersaber_key_setup.asm](ciphersaber_key_setup.asm): _Calls key setup functions_
+- [randomstream.asm](randomstream.asm): _Random number generator_
+- [debug_ciphersaber.asm](debug_ciphersaber.asm): _Debugging specific to ciphersaber_
+- [debug_registers.asm](../debug/debug_registers.asm): _Register debugger (I don't think I actually use either of these anymore, but it _was_ handy while I was writing this.)_
+- [writeutils.inc](../debug/writeutils.inc): _These are utilities to write to the console. I think they're really only used by the debuggers._
 - [writeutils.asm](../debug/writeutils.asm)
-- [sensible_unsigned_compares.inc](../debug/sensible_unsigned_compares.inc)    # Friendlier (to me, anyway) comparison *pseudo* op-codes, like `blt`, `ble`, `bgt` and `bge` as opposed to `bcs` and `bcc`)
-- [ciphersaber_key_zero.asm](ciphersaber_key_zero.asm)    # Zero page locations. (Tho, there are other zero page addresses in use, so this is somewhat misleading, unfortunately.)
-- [cknightcx16.gif](cknightcx16.gif)    # My signed Ciphersaber certificate! Go get your own! See [cknight.cs1](https://cablemodem.hex21.com/ciphersaber/#testfiles)
-- [cknightcx16.cs256](cknightcx16.cs256)    # The above Ciphersaber certificate encrypted with "CommanderX16!" and rounds=256
-- [kernal.inc](../debug/kernal.inc)	# These are just all the kernal routines from [KERNAL.md](https://github.com/X16Community/x16-docs/blob/master/X16%20Reference%20-%2005%20-%20KERNAL.md)
-- [Makefile](Makefile)    # Build automation
-- [README.md](README.md)    # This file.
+- [sensible_unsigned_compares.inc](../debug/sensible_unsigned_compares.inc): _Friendlier (to me, anyway) comparison *pseudo* op-codes, like `blt`, `ble`, `bgt` and `bge` as opposed to `bcs` and `bcc`_
+- [ciphersaber_key_zero.asm](ciphersaber_key_zero.asm): _Zero page locations. (Tho, there are other zero page addresses in use, so this is somewhat misleading, unfortunately.)_
+- [cknightcx16.gif](cknightcx16.gif): _My signed Ciphersaber certificate! Go get your own! See [cknight.cs1](https://cablemodem.hex21.com/ciphersaber/#testfiles)_
+- [cknightcx16.cs256](cknightcx16.cs256): _The above Ciphersaber certificate encrypted with "CommanderX16!" and rounds=256_
+- [kernal.inc](../debug/kernal.inc) _These are just all the kernal routines from [KERNAL.md](https://github.com/X16Community/x16-docs/blob/master/X16%20Reference%20-%2005%20-%20KERNAL.md)_
+- [Makefile](Makefile): _Build automation_
+- [README.md](README.md): _This file._
 
 # TODO
 - I'd _love_ to be able to just write a
@@ -45,7 +45,7 @@ The "main" programs are:
 
   Although... I saw in the [C64 Programmers Reference Guide](https://archive.org/details/c64-programmer-ref/page/n329/mode/2up) a reference to a `CHRGET` routine, which says:
 
-  > 5) The **CHRGET** routine is used by BASIC to get each character/token. This makes it simple to add new BASIC commands. Naturally, each new command must be executed by a user written machine language subroutine. A common way to use this method is to specify a character (@ for example) which will occur before any of the new commands. The new CHRGET routine will search for the special character. If none is present, control is passed to the normal BASIC CHRGET routine. If the special character is present, the new command is interpreted and executed by your machine language program. This minimizes the extra execution time added by the need to search for additional commands. This technique is often called a wedge.
+  > 5. The **CHRGET** routine is used by BASIC to get each character/token. This makes it simple to add new BASIC commands. Naturally, each new command must be executed by a user written machine language subroutine. A common way to use this method is to specify a character (@ for example) which will occur before any of the new commands. The new CHRGET routine will search for the special character. If none is present, control is passed to the normal BASIC CHRGET routine. If the special character is present, the new command is interpreted and executed by your machine language program. This minimizes the extra execution time added by the need to search for additional commands. This technique is often called a wedge.
 
   But then, I don't see any further reference to `CHRGET`... Hm. Well, I'm not programming on the C64.. I wonder if I _could_ in _practice_ _make_ a new commander X16 basic command... Hmmm.. Maybe
   ```basic
