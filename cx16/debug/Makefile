@@ -6,6 +6,7 @@ OBJS=$(SRCS:asm=o)
 GENERATED=\
     branch_tests.asm \
     kernal.inc \
+    cx16_registers.inc \
 
 PYTHON=$(sort $(wildcard *.py))
 PYLINT3=$(addprefix .,$(PYTHON:py=pylint3))
@@ -26,6 +27,9 @@ branch_tests.asm: branch_tests.py
 
 kernal.inc: kernal.py kernal.csv
 	python3 kernal.py --output $(@)
+
+cx16_registers.inc: cx16_registers.py
+	python3 cx16_registers.py --output $(@)
 
 BRANCH_TESTS.MAP BRANCH_TESTS.PRG: branch_tests.o debug_registers.o writeutils.o
 	cl65 -m BRANCH_TESTS.MAP -o BRANCH_TESTS.PRG -Wl -S,2049 -t cx16 -C cx16-asm.cfg $(^)
