@@ -17,7 +17,7 @@ run:
 	x16emu -prg $(UPPER_NAME).PRG -run -scale 2
 
 debug:
-	x16emu -debug 080d -prg $(UPPER_NAME).PRG -run -scale 2
+	x16emu -debug 088A -prg $(UPPER_NAME).PRG -run -scale 2
 
 push-%: all
 	rsync -avz -e ssh --delete --progress $(HOME)/src/6502/cx16/$(NAME)/ $(*):src/6502/cx16/$(NAME)/
