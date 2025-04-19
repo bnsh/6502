@@ -1,3 +1,3 @@
-# Skeleton
+# Sieve
 
-This is just a skeleton CX16 Assembler project.
+This is just my implementation of the [Sieve of Eratosthenes](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes) in Commander X16 65C02 Assembler is all.
