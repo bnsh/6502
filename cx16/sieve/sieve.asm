@@ -24,7 +24,20 @@
 .byte $00, $00
 
 sieve = $6000
-sieve_end = sieve+$2000
+sieve_end = sieve+$2000 ; finds 6542 primes (65521) in 46 jiffies https://www.wolframalpha.com/input?i=What+is+the+6542nd+prime+number%3F
+; sieve_end = sieve+$1000 ; finds 3512 primes (32749) in 41 jiffies https://www.wolframalpha.com/input?i=What+is+the+3512nd+prime+number%3F
+; sieve_end = sieve+$0980 ; finds 2205 primes (19447) in 41 jiffies https://www.wolframalpha.com/input?i=What+is+the+2205th+prime+number%3F
+; sieve_end = sieve+$0960 ; finds 2176 primes (19813) in 39 jiffies https://www.wolframalpha.com/input?i=What+is+the+2176th+prime+number%3F
+; sieve_end = sieve+$0950 ; finds 2165 primes (19069) in 39 jiffies https://www.wolframalpha.com/input?i=What+is+the+2165th+prime+number%3F
+; sieve_end = sieve+$0948 ; finds 2159 primes (19001) in 39 jiffies https://www.wolframalpha.com/input?i=What+is+the+2159th+prime+number%3F
+;           @MarkTheStrange finds 2158 primes (18979) in 20 jiffies https://www.wolframalpha.com/input?i=What+is+the+18979th+prime+number%3F
+; sieve_end = sieve+$0946 ; finds 2158 primes (18979) in 39 jiffies https://www.wolframalpha.com/input?i=What+is+the+2158th+prime+number%3F
+; sieve_end = sieve+$0944 ; finds 2157 primes (18973) in 39 jiffies https://www.wolframalpha.com/input?i=What+is+the+2157th+prime+number%3F
+; sieve_end = sieve+$0940 ; finds 2154 primes (18919) in 39 jiffies https://www.wolframalpha.com/input?i=What+is+the+2205th+prime+number%3F
+; sieve_end = sieve+$0900 ; finds 2110 primes (18427) in 41 jiffies https://www.wolframalpha.com/input?i=What+is+the+3512nd+prime+number%3F
+; sieve_end = sieve+$0800 ; finds 1900 primes (16381) in 38 jiffies https://www.wolframalpha.com/input?i=What+is+the+1900th+prime+number%3F
+square_root_of_target=251
+; square_root_of_target=138 ; Even if I reduce the square_root_of_target I still only get upto 36 jiffies.
 
 main:
     jsr init_memory
@@ -246,7 +259,7 @@ factor_rest:
 keepgoing_rest:
     lda r1
     inc
-    cmp #251
+    cmp #square_root_of_target
     bgt done_rest
     sta r1
 
