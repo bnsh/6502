@@ -5,6 +5,9 @@
 
 ; TODO: We need a list of all the basic tokens.
 
+basic_print = $99
+basic_sys = $9e
+
 .macro basic_line number, content
   .local next 
   .word next
