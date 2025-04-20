@@ -1,6 +1,7 @@
 __pycache__
 kommissar/
 .*.pylint3
+.*.mypy
 *.ASM
 *.BAS
 *.MAP
