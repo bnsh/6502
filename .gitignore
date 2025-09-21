@@ -2,6 +2,7 @@ __pycache__
 kommissar/
 .*.pylint3
 .*.mypy
+.*.pyright
 *.ASM
 *.BAS
 *.MAP
